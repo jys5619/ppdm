@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/ppdm/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/ppdm/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/ppdm",
+  "projects": {
+    "ppdm": {
+      "type": "application",
+      "root": "apps/ppdm",
+      "entryFile": "main",
+      "sourceRoot": "apps/ppdm/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/ppdm/tsconfig.app.json"
+      }
+    },
+    "ppdm-admin": {
+      "type": "application",
+      "root": "apps/ppdm-admin",
+      "entryFile": "main",
+      "sourceRoot": "apps/ppdm-admin/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/ppdm-admin/tsconfig.app.json"
+      }
+    },
+    "ppdm-batch": {
+      "type": "application",
+      "root": "apps/ppdm-batch",
+      "entryFile": "main",
+      "sourceRoot": "apps/ppdm-batch/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/ppdm-batch/tsconfig.app.json"
+      }
+    },
+    "ppdm-sqlite-entity": {
+      "type": "library",
+      "root": "libs/ppdm-sqlite-entity",
+      "entryFile": "index",
+      "sourceRoot": "libs/ppdm-sqlite-entity/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/ppdm-sqlite-entity/tsconfig.lib.json"
+      }
+    }
+  }
+}
