@@ -9,7 +9,7 @@ async function bootstrap() {
     .setTitle('PPDM Batch')
     .setDescription('PPDM Batch CRUD')
     .setVersion('1.0')
-    .addTag('ppdm')
+    .addTag('ppdm batch')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
