@@ -9,7 +9,7 @@ async function bootstrap() {
     .setTitle('PPDM Admin')
     .setDescription('PPDM Admin CRUD')
     .setVersion('1.0')
-    .addTag('ppdm')
+    .addTag('ppdm admin')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
