@@ -78,7 +78,7 @@ npm i @nestjs/typeorm typeorm typeorm-naming-strategies class-transformer class-
 
 ##### 개발 Sqlite 연결
 
-###### ==**dev-typeorm.config.ts**==: ppdm/libs/ppdm-sqlite-entity/libs/ppdm-sqlite-entity/src\share/config/dev-typeorm.config.ts
+###### ppdm/libs/ppdm-sqlite-entity/libs/ppdm-sqlite-entity/src/share/config/dev-typeorm.config.ts
 
 ```ts
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
@@ -90,6 +90,7 @@ export const devTypeOrmConfig: TypeOrmModuleOptions = {
   entities: [__dirname + '/../../entities/**/*.entity{.ts,.js}'], //
   logging: true,
   dropSchema: true,
+  namingStrategy: new SnakeNamingStrategy(),
 };
 ```
 

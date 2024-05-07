@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 export const devTypeOrmConfig: TypeOrmModuleOptions = {
   type: 'better-sqlite3',
@@ -7,4 +8,5 @@ export const devTypeOrmConfig: TypeOrmModuleOptions = {
   entities: [__dirname + '/../../entities/**/*.entity{.ts,.js}'], //
   logging: true,
   dropSchema: true,
+  namingStrategy: new SnakeNamingStrategy(),
 };
