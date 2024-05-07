@@ -36,64 +36,12 @@
     "memoIds": []
   },
   "collections": {
-    "tableEntities": {
-      "zfrbtD94Zw4Ot74dLpGiG": {
-        "id": "zfrbtD94Zw4Ot74dLpGiG",
-        "name": "USER",
-        "comment": "",
-        "columnIds": [
-          "0gWa7Z3fgs3ZDu4Bpu9_N"
-        ],
-        "seqColumnIds": [
-          "0gWa7Z3fgs3ZDu4Bpu9_N"
-        ],
-        "ui": {
-          "x": 50,
-          "y": 50,
-          "zIndex": 2,
-          "widthName": 60,
-          "widthComment": 60,
-          "color": ""
-        },
-        "meta": {
-          "updateAt": 1714664939348,
-          "createAt": 1714664939348
-        }
-      }
-    },
-    "tableColumnEntities": {
-      "0gWa7Z3fgs3ZDu4Bpu9_N": {
-        "id": "0gWa7Z3fgs3ZDu4Bpu9_N",
-        "tableId": "zfrbtD94Zw4Ot74dLpGiG",
-        "name": "EMAIL",
-        "comment": "",
-        "dataType": "",
-        "default": "",
-        "options": 0,
-        "ui": {
-          "keys": 0,
-          "widthName": 60,
-          "widthComment": 60,
-          "widthDataType": 60,
-          "widthDefault": 60
-        },
-        "meta": {
-          "updateAt": 1714664939348,
-          "createAt": 1714664939348
-        }
-      }
-    },
+    "tableEntities": {},
+    "tableColumnEntities": {},
     "relationshipEntities": {},
     "indexEntities": {},
     "indexColumnEntities": {},
     "memoEntities": {}
   },
-  "lww": {
-    "zfrbtD94Zw4Ot74dLpGiG": [
-      "tableEntities",
-      -1,
-      1714664950159,
-      {}
-    ]
-  }
+  "lww": {}
 }

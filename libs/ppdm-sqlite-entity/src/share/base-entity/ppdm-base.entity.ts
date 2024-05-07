@@ -1,7 +1,7 @@
 import { CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 export class PpdmBaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', { comment: 'ID' })
   id: string;
 
   @CreateDateColumn({ nullable: true, comment: '생성일시' })
