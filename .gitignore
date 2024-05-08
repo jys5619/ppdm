@@ -2,7 +2,8 @@
 /dist
 /node_modules
 /build
-/dev
+/db
+/apps/ppdm/src/env
 
 # Logs
 logs

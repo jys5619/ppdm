@@ -2,7 +2,13 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "declaration": false,
-    "outDir": "../../dist/apps/ppdm"
+    "outDir": "../../dist/apps/ppdm",
+    "assets": [
+      {
+        "include": "./config/env/*.env",
+        "outDir": "./dist"
+      }
+    ]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]

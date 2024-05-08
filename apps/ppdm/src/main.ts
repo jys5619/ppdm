@@ -1,18 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { PpdmModule } from './ppdm.module';
+import { SwaggerSetup } from './share/config/swagger.setup';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(PpdmModule);
 
-  const swaggerConfig = new DocumentBuilder()
-    .setTitle('PPDM')
-    .setDescription('PPDM CRUD')
-    .setVersion('1.0')
-    .addTag('ppdm')
-    .build();
-  const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('swagger', app, document);
+  SwaggerSetup(app);
 
   await app.listen(3000);
 }

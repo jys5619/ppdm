@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UserRepository } from '@app/ppdm-sqlite-entity/entities/user/user.repository';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from '@app/ppdm-sqlite-entity/entities/user/dto/create-user.dto';
+import { UpdateUserDto } from '@app/ppdm-sqlite-entity/entities/user/dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -19,8 +19,15 @@ export class UsersService {
     return await this.userRepository.findOneBy({ id });
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
-    return this.userRepository.update(id, updateUserDto);
+  async findOneByEmail(email: string) {
+    return await this.userRepository.findOne({
+      where: { email },
+    });
+  }
+
+  async update(updateUserDto: UpdateUserDto) {
+    const { id, ...dto } = updateUserDto;
+    return this.userRepository.update(id, dto);
   }
 
   remove(id: string) {

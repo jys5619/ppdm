@@ -23,6 +23,12 @@
       ],
       "@app/ppdm-sqlite-entity/*": [
         "libs/ppdm-sqlite-entity/src/*"
+      ],
+      "@app/ppdm-common": [
+        "libs/ppdm-common/src"
+      ],
+      "@app/ppdm-common/*": [
+        "libs/ppdm-common/src/*"
       ]
     }
   }

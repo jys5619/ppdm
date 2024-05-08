@@ -12,4 +12,10 @@ export class CreateUserDto {
     example: 'email@domain.com',
   })
   email: string;
+
+  @ApiProperty({
+    description: '패스워드',
+    example: '11111111',
+  })
+  password: string;
 }

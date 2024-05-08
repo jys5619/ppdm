@@ -16,7 +16,14 @@
       "entryFile": "main",
       "sourceRoot": "apps/ppdm/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/ppdm/tsconfig.app.json"
+        "tsConfigPath": "apps/ppdm/tsconfig.app.json",
+        "assets": [
+          {
+            "include": "./env/*.env",
+            "outDir": "./dist"
+          }
+        ],
+        "watchAssets": true
       }
     },
     "ppdm-admin": {
@@ -44,6 +51,15 @@
       "sourceRoot": "libs/ppdm-sqlite-entity/src",
       "compilerOptions": {
         "tsConfigPath": "libs/ppdm-sqlite-entity/tsconfig.lib.json"
+      }
+    },
+    "ppdm-common": {
+      "type": "library",
+      "root": "libs/ppdm-common",
+      "entryFile": "index",
+      "sourceRoot": "libs/ppdm-common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/ppdm-common/tsconfig.lib.json"
       }
     }
   }

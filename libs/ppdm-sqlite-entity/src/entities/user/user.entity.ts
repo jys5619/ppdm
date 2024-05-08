@@ -19,4 +19,12 @@ export class UserEntity extends PpdmBaseEntity {
     comment: '이메일',
   })
   email: string;
+
+  @Column({
+    type: 'varchar',
+    length: 30,
+    nullable: false,
+    comment: '패스워드',
+  })
+  password: string;
 }
