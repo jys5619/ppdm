@@ -1,19 +1,17 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '@app/ppdm-sqlite-entity/entities/user/dto/create-user.dto';
 import { SigninDto } from '@app/ppdm-sqlite-entity/entities/auth/singin.dto';
 import * as bcrypt from 'bcrypt';
 import { IPayload } from '@app/ppdm-sqlite-entity/entities/auth/payload.interface';
 import { JwtService } from '@nestjs/jwt';
 import { PpdmHttpException } from '@app/ppdm-common/exception/ppdm-http-exception';
-import { ConfigService } from '@nestjs/config';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthsService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    private readonly config: ConfigService,
   ) {}
 
   private async singupValidation(
