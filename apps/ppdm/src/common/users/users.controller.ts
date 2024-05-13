@@ -21,7 +21,7 @@ export class UsersController {
 
   @Patch(':id')
   update(@Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(updateUserDto);
+    return updateUserDto; // this.usersService.update(updateUserDto);
   }
 
   @Delete(':id')

@@ -1,11 +1,12 @@
-import { Column, Entity } from 'typeorm';
-import { PpdmBaseEntity } from '../../share/base-entity/ppdm-base.entity';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { UserRoleEntity } from '../user-role/user-role.entity';
+import { PpdmBaseEntity } from '@app/ppdm-sqlite-entity/share/base-entity/ppdm-base.entity';
 
-@Entity({ name: 'user', comment: '사용자' })
+@Entity({ name: 'TB_USER', comment: '사용자' })
 export class UserEntity extends PpdmBaseEntity {
   @Column({
     type: 'varchar',
-    length: 100,
+    length: 50,
     nullable: false,
     comment: '사용자명',
   })
@@ -13,7 +14,7 @@ export class UserEntity extends PpdmBaseEntity {
 
   @Column({
     type: 'varchar',
-    length: 100,
+    length: 40,
     nullable: false,
     unique: true,
     comment: '이메일',
@@ -22,9 +23,24 @@ export class UserEntity extends PpdmBaseEntity {
 
   @Column({
     type: 'varchar',
-    length: 30,
+    length: 100,
     nullable: false,
     comment: '패스워드',
   })
   password: string;
+
+  @Column({
+    type: 'varchar',
+    length: 30,
+    nullable: false,
+    comment: '상태',
+    default: 'Active',
+  })
+  state: string;
+
+  @OneToMany(() => UserRoleEntity, (userRoleEntity) => userRoleEntity.user, {
+    onDelete: 'CASCADE',
+    lazy: true,
+  })
+  roles: Promise<UserRoleEntity[]>;
 }

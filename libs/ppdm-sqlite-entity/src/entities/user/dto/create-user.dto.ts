@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { UserRoleEntity } from '../../user-role/user-role.entity';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -18,4 +19,10 @@ export class CreateUserDto {
     example: '11111111',
   })
   password: string;
+
+  @ApiProperty({
+    description: '역할명',
+    example: '{roles: [{name: "USER"}]',
+  })
+  roles: UserRoleEntity[];
 }

@@ -6,12 +6,14 @@ import { IPayload } from '@app/ppdm-sqlite-entity/entities/auth/payload.interfac
 import { JwtService } from '@nestjs/jwt';
 import { PpdmHttpException } from '@app/ppdm-common/exception/ppdm-http-exception';
 import { UsersService } from '../users/users.service';
+import { RoleType } from '@app/ppdm-sqlite-entity/entities/user-role/user-role.enum';
+import { UserRoleEntity } from '@app/ppdm-sqlite-entity/entities/user-role/user-role.entity';
 
 @Injectable()
 export class AuthsService {
   constructor(
-    private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly usersService: UsersService,
   ) {}
 
   private async singupValidation(
@@ -37,6 +39,7 @@ export class AuthsService {
   }
 
   async signup(createUserDto: CreateUserDto) {
+    console.log('createUserDto', createUserDto);
     const message = await this.singupValidation(createUserDto);
     if (!message) {
       throw new PpdmHttpException(message);
@@ -44,7 +47,15 @@ export class AuthsService {
 
     createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
 
-    return await this.usersService.create(createUserDto);
+    const roles = await createUserDto.roles;
+    // role 생성
+    if (!roles || roles.length === 0) {
+      createUserDto.roles = [{ name: RoleType.USER } as UserRoleEntity];
+    }
+
+    const createUser = await this.usersService.create(createUserDto);
+
+    return createUser;
   }
 
   async signin(signinDto: SigninDto): Promise<{ access_token: string }> {
