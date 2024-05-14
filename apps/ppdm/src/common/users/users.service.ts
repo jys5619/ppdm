@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from '@app/ppdm-sqlite-entity/entities/user/user.repository';
-import { CreateUserDto } from '@app/ppdm-sqlite-entity/entities/user/dto/create-user.dto';
+import { CreateUserDto } from 'apps/ppdm/src/common/auths/dto/create-user.dto';
 import { UserRoleRepository } from '@app/ppdm-sqlite-entity/entities/user-role/user-role.repository';
 import { UserRoleEntity } from '@app/ppdm-sqlite-entity/entities/user-role/user-role.entity';
+import { UserEntity } from '@app/ppdm-sqlite-entity/entities/user/user.entity';
 // import { UserRoleEntity } from '@app/ppdm-sqlite-entity/entities/user-role/user-role.entity';
 // import { UserEntity } from '@app/ppdm-sqlite-entity/entities/user/user.entity';
 
@@ -14,11 +15,17 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const userRoles = await this.userRoleRepository.save(createUserDto.roles);
-    const user = {
-      ...createUserDto,
-      roles: new Promise<UserRoleEntity[]>((resolve) => resolve(userRoles)),
-    };
+    const userRolesDto = createUserDto.roles.map((r) => {
+      return { name: r };
+    });
+    const userRoles = await this.userRoleRepository.save(userRolesDto);
+
+    const user: UserEntity = new UserEntity();
+    user.name = createUserDto.name;
+    user.email = createUserDto.email;
+    user.password = createUserDto.password;
+    user.roles = new Promise<UserRoleEntity[]>((resolve) => resolve(userRoles));
+
     return await this.userRepository.save(user);
   }
 

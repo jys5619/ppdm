@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { CreateUserDto } from '@app/ppdm-sqlite-entity/entities/user/dto/create-user.dto';
+import { CreateUserDto } from 'apps/ppdm/src/common/auths/dto/create-user.dto';
 import { SigninDto } from '@app/ppdm-sqlite-entity/entities/auth/singin.dto';
 import * as bcrypt from 'bcrypt';
 import { IPayload } from '@app/ppdm-sqlite-entity/entities/auth/payload.interface';
@@ -7,7 +7,6 @@ import { JwtService } from '@nestjs/jwt';
 import { PpdmHttpException } from '@app/ppdm-common/exception/ppdm-http-exception';
 import { UsersService } from '../users/users.service';
 import { RoleType } from '@app/ppdm-sqlite-entity/entities/user-role/user-role.enum';
-import { UserRoleEntity } from '@app/ppdm-sqlite-entity/entities/user-role/user-role.entity';
 
 @Injectable()
 export class AuthsService {
@@ -47,10 +46,9 @@ export class AuthsService {
 
     createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
 
-    const roles = await createUserDto.roles;
     // role 생성
-    if (!roles || roles.length === 0) {
-      createUserDto.roles = [{ name: RoleType.USER } as UserRoleEntity];
+    if (!createUserDto.roles || createUserDto.roles.length === 0) {
+      createUserDto.roles = [RoleType.USER];
     }
 
     const createUser = await this.usersService.create(createUserDto);

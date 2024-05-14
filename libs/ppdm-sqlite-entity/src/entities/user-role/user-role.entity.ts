@@ -14,15 +14,6 @@ export class UserRoleEntity extends PpdmBaseEntity {
   })
   name: RoleType;
 
-  @Column({
-    name: 'user_id',
-    type: 'uuid',
-    length: 40,
-    nullable: false,
-    comment: '사용자ID',
-  })
-  userId: string;
-
   @ManyToOne(() => UserEntity, (userEntity) => userEntity.roles)
   @JoinColumn([{ name: 'user_id', referencedColumnName: 'id' }])
   user: Relation<UserEntity>;

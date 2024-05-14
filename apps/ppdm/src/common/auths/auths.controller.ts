@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { AuthsService } from './auths.service';
-import { CreateUserDto } from '@app/ppdm-sqlite-entity/entities/user/dto/create-user.dto';
+import { CreateUserDto } from 'apps/ppdm/src/common/auths/dto/create-user.dto';
 import { SigninDto } from '@app/ppdm-sqlite-entity/entities/auth/singin.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PpdmPublicAuth } from '../../share/decorator/ppdm-publiic-auth';
