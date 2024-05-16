@@ -18,18 +18,12 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@app/ppdm-sqlite-entity": [
-        "libs/ppdm-sqlite-entity/src"
-      ],
-      "@app/ppdm-sqlite-entity/*": [
-        "libs/ppdm-sqlite-entity/src/*"
-      ],
-      "@app/ppdm-common": [
-        "libs/ppdm-common/src"
-      ],
-      "@app/ppdm-common/*": [
-        "libs/ppdm-common/src/*"
-      ]
+      "@entity/ppdm-sqlite-entity": ["libs/ppdm-sqlite-entity/src"],
+      "@entity/ppdm-sqlite-entity/*": ["libs/ppdm-sqlite-entity/src/*"],
+      "@app/ppdm-common": ["libs/ppdm-common/src"],
+      "@app/ppdm-common/*": ["libs/ppdm-common/src/*"],
+      "@doms/ppdm-dom": ["libs/ppdm-dom/src"],
+      "@doms/ppdm-dom/*": ["libs/ppdm-dom/src/*"]
     }
   }
 }

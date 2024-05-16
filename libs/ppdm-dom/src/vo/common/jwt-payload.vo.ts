@@ -1,4 +1,4 @@
-export interface IPayload {
+export interface JwtPayloadVo {
   id: string;
   name: string;
   email: string;

@@ -95,8 +95,9 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@libs/ppdm-sqlite-entity(|/.*)$": "<rootDir>/libs/ppdm-sqlite-entity/src/$1",
-      "^@libs/ppdm-common(|/.*)$": "<rootDir>/libs/ppdm-common/src/$1"
+      "^@entity/ppdm-sqlite-entity(|/.*)$": "<rootDir>/libs/ppdm-sqlite-entity/src/$1",
+      "^@libs/ppdm-common(|/.*)$": "<rootDir>/libs/ppdm-common/src/$1",
+      "^@doms/ppdm-dom(|/.*)$": "<rootDir>/libs/ppdm-dom/src/$1"
     }
   }
 }

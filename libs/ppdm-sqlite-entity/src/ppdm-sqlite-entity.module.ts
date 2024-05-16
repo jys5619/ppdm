@@ -1,10 +1,9 @@
 import { Global, Module } from '@nestjs/common';
-import { UserModule } from './entities/user/user.module';
-import { UserRoleModule } from './entities/user-role/user-role.module';
+import { EntityModule } from './entities/entity.module';
 
 @Global()
 @Module({
-  imports: [UserModule, UserRoleModule],
-  exports: [UserModule, UserRoleModule],
+  imports: [EntityModule],
+  exports: [EntityModule],
 })
 export class PpdmSqliteEntityModule {}

@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, Relation } from 'typeorm';
 import { UserEntity } from '../user/user.entity';
-import { PpdmBaseEntity } from '@app/ppdm-sqlite-entity/share/base-entity/ppdm-base.entity';
 import { RoleType } from './user-role.enum';
+import { PpdmBaseEntity } from '@entity/ppdm-sqlite-entity/share/base-entity/ppdm-base.entity';
 
 @Entity({ name: 'TB_USER_ROLE', comment: '사용자권한' })
 export class UserRoleEntity extends PpdmBaseEntity {

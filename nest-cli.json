@@ -61,6 +61,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/ppdm-common/tsconfig.lib.json"
       }
+    },
+    "ppdm-dom": {
+      "type": "library",
+      "root": "libs/ppdm-dom",
+      "entryFile": "index",
+      "sourceRoot": "libs/ppdm-dom/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/ppdm-dom/tsconfig.lib.json"
+      }
     }
   }
 }

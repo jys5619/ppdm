@@ -4,6 +4,7 @@
   - eslint
 - Controller, Service, Module
 - TypeOrm
+  - Snowflake(ID 생성 방법)
 - Swagger
 - Jwt
 - Auth Guard

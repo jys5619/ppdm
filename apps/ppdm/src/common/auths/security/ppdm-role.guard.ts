@@ -1,5 +1,5 @@
-import { UserRoleEntity } from '@app/ppdm-sqlite-entity/entities/user-role/user-role.entity';
-import { UserEntity } from '@app/ppdm-sqlite-entity/entities/user/user.entity';
+import { UserEntity } from '@entity/ppdm-sqlite-entity/entities/common/user';
+import { UserRoleEntity } from '@entity/ppdm-sqlite-entity/entities/common/user-role';
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';

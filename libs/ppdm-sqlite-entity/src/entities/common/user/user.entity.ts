@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { UserRoleEntity } from '../user-role/user-role.entity';
-import { PpdmBaseEntity } from '@app/ppdm-sqlite-entity/share/base-entity/ppdm-base.entity';
+import { PpdmBaseEntity } from '@entity/ppdm-sqlite-entity/share/base-entity/ppdm-base.entity';
 
 @Entity({ name: 'TB_USER', comment: '사용자' })
 export class UserEntity extends PpdmBaseEntity {
