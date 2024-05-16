@@ -11,6 +11,7 @@ interface IEnv {
   };
   jwt: {
     secritKey: string;
+    siteAccessUserRole: string;
   };
 }
 
@@ -43,6 +44,7 @@ class PrivateSystemUtil {
       },
       jwt: {
         secritKey: process.env.JWT_SECRIT_KEY,
+        siteAccessUserRole: process.env.SITE_ACCESS_USER_ROLE,
       },
     };
   }

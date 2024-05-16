@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserDom } from '@doms/ppdm-dom/dom/common';
-import { JwtPayloadVo } from '@doms/ppdm-dom/vo/common';
 import { SigninDto, SignupDto } from './dto';
+import { JwtPayloadVo } from '@doms/ppdm-dom/vo/share';
 
 @Injectable()
 export class AuthsService {
@@ -17,22 +17,24 @@ export class AuthsService {
   }
 
   async signin(signinDto: SigninDto): Promise<{ access_token: string }> {
-    const findUser = await this.userDom.findOneByEmail(signinDto.email);
+    const { email, password } = signinDto;
+    const findUser = await this.userDom.findOneByEmail(email);
 
     const isMatch = await this.userDom.isMatchPassword(
       findUser.password,
-      signinDto.password,
+      password,
     );
 
     if (!isMatch) {
       throw new UnauthorizedException();
     }
 
+    const roles = await findUser.roles;
     const payload: JwtPayloadVo = {
       id: findUser.id,
       name: findUser.name,
       email: findUser.email,
-      roles: [],
+      roles: roles.map((r) => r.name),
     };
 
     const jwt = await this.jwtService.signAsync(payload);

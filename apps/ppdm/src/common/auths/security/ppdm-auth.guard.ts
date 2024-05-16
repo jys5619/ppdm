@@ -1,7 +1,7 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard as NestAuthGuard } from '@nestjs/passport';
-import { IS_PUBLIC_KEY } from 'apps/ppdm/src/share/decorator/ppdm-publiic-auth';
+import { IS_PUBLIC_KEY } from 'apps/ppdm/src/share/decorator/ppdm-public-auth';
 
 @Injectable()
 export default class PpdmAuthGuard extends NestAuthGuard('jwt') {

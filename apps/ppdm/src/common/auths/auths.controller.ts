@@ -2,7 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { AuthsService } from './auths.service';
 import { SigninDto } from 'apps/ppdm/src/common/auths/dto/singin.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { PpdmPublicAuth } from '../../share/decorator/ppdm-publiic-auth';
+import { PpdmPublicAuth } from '../../share/decorator/ppdm-public-auth';
 import { SignupDto } from './dto';
 
 @ApiTags('Auth Controller')

@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import SystemUtil from 'apps/ppdm/src/share/util/system.util';
 import { ExtractJwt, Strategy, VerifiedCallback } from 'passport-jwt';
 import { UserDom } from '@doms/ppdm-dom/dom/common';
-import { JwtPayloadVo } from '@doms/ppdm-dom/vo/common';
+import { JwtPayloadVo, UserInfoVo } from '@doms/ppdm-dom/vo/share';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -20,6 +20,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       throw new UnauthorizedException();
     }
-    return done(null, user);
+
+    const userInfo: UserInfoVo = {
+      id: payload.id,
+      name: payload.name,
+      email: payload.email,
+      roles: payload.roles,
+    };
+
+    return done(null, userInfo);
   }
 }

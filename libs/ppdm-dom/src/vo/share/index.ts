@@ -1,2 +1,5 @@
+import { JwtPayloadVo } from './jwt-payload.vo';
 import PpdmBaseVo from './ppdm-base.vo';
-export { PpdmBaseVo };
+import { UserInfoVo } from './user-info.vo';
+
+export { PpdmBaseVo, JwtPayloadVo, UserInfoVo };

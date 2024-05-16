@@ -8,12 +8,17 @@ import { typeOrmConfig } from './share/config/typeorm.config';
 import { APP_GUARD } from '@nestjs/core';
 import PpdmAuthGuard from './common/auths/security/ppdm-auth.guard';
 import { PpdmDomModule } from '@doms/ppdm-dom/ppdm-dom.module';
+import { PpdmRolesGuard } from './common/auths/security/ppdm-role.guard';
 
 @Module({
   providers: [
     {
       provide: APP_GUARD,
       useClass: PpdmAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: PpdmRolesGuard,
     },
   ],
   imports: [
