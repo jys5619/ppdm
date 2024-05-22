@@ -2,7 +2,8 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserDom } from '@doms/ppdm-dom/dom/common';
 import { SigninDto, SignupDto } from './dto';
-import { JwtPayloadVo } from '@doms/ppdm-dom/vo/share';
+import { JwtPayloadVo, UserInfoVo } from '@doms/ppdm-dom/vo/share';
+import { UserVo } from '@doms/ppdm-dom/vo/common';
 
 @Injectable()
 export class AuthsService {
@@ -16,9 +17,15 @@ export class AuthsService {
     await this.userDom.create(user, roles);
   }
 
-  async signin(signinDto: SigninDto): Promise<{ access_token: string }> {
+  async signin(
+    signinDto: SigninDto,
+  ): Promise<{ access_token: string; user: UserInfoVo }> {
     const { email, password } = signinDto;
     const findUser = await this.userDom.findOneByEmail(email);
+
+    if (!findUser) {
+      throw new UnauthorizedException();
+    }
 
     const isMatch = await this.userDom.isMatchPassword(
       findUser.password,
@@ -37,8 +44,15 @@ export class AuthsService {
       roles: roles.map((r) => r.name),
     };
 
+    const userVo: UserInfoVo = {
+      id: findUser.id,
+      name: findUser.name,
+      email: findUser.email,
+      roles: roles.map((r) => r.name),
+    };
+
     const jwt = await this.jwtService.signAsync(payload);
 
-    return { access_token: jwt };
+    return { access_token: jwt, user: userVo };
   }
 }
