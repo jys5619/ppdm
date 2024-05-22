@@ -3,7 +3,6 @@ import { JwtService } from '@nestjs/jwt';
 import { UserDom } from '@doms/ppdm-dom/dom/common';
 import { SigninDto, SignupDto } from './dto';
 import { JwtPayloadVo, UserInfoVo } from '@doms/ppdm-dom/vo/share';
-import { UserVo } from '@doms/ppdm-dom/vo/common';
 
 @Injectable()
 export class AuthsService {
