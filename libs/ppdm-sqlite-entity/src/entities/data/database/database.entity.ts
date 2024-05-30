@@ -1,17 +1,17 @@
-import { Column, Entity, OneToMany } from 'typeorm';
-import { UserRoleEntity } from '../user-role/user-role.entity';
+import { Column, Entity } from 'typeorm';
 import { PpdmBaseEntity } from '@entity/ppdm-sqlite-entity/share/base-entity/ppdm-base.entity';
 import { ActiveInactiveType } from '@entity/ppdm-sqlite-entity/share/states';
+import { DbType } from '@entity/ppdm-sqlite-entity/share/data-type';
 
-@Entity({ name: 'TB_USER', comment: '사용자' })
-export class UserEntity extends PpdmBaseEntity {
+@Entity({ name: 'TB_DATABASE', comment: 'DB정보' })
+export class DatabaseEntity extends PpdmBaseEntity {
   @Column({
     type: 'varchar',
     length: 150,
     nullable: false,
     comment: '사용자명',
   })
-  name: string;
+  dbType: DbType;
 
   @Column({
     type: 'varchar',
@@ -37,10 +37,4 @@ export class UserEntity extends PpdmBaseEntity {
     comment: '상태',
   })
   state: ActiveInactiveType;
-
-  @OneToMany(() => UserRoleEntity, (userRoleEntity) => userRoleEntity.user, {
-    onDelete: 'CASCADE',
-    lazy: true,
-  })
-  roles: Promise<UserRoleEntity[]>;
 }

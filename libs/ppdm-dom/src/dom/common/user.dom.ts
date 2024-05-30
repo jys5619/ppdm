@@ -1,13 +1,11 @@
 import { PpdmHttpException } from '@app/ppdm-common/exception/ppdm-http-exception';
-import { UserRoleVo, UserVo } from '@doms/ppdm-dom/vo/common';
+import { UserVo } from '@doms/ppdm-dom/vo/common';
 import {
   UserEntity,
   UserRepository,
 } from '@entity/ppdm-sqlite-entity/entities/common/user';
-import {
-  UserRoleEntity,
-  UserRoleRepository,
-} from '@entity/ppdm-sqlite-entity/entities/common/user-role';
+import { UserRoleRepository } from '@entity/ppdm-sqlite-entity/entities/common/user-role';
+import { ActiveInactiveType } from '@entity/ppdm-sqlite-entity/share/states';
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
@@ -32,22 +30,21 @@ export class UserDom {
    * @param userRoleList
    * @returns
    */
-  public async create(userVo: UserVo, userRoleList: UserRoleVo[]) {
+  public async create(userVo: UserVo) {
     const message = await this.createValidation(userVo);
-    if (!message) {
+    if (message) {
       throw new PpdmHttpException(message);
     }
 
     const user: UserEntity = new UserEntity();
     user.name = userVo.name;
     user.email = userVo.email;
+    user.state = ActiveInactiveType.Active;
     user.password = await bcrypt.hash(userVo.password, 10);
 
-    if (userRoleList && userRoleList.length > 0) {
-      const userRoles = await this.userRoleRepository.save(userRoleList);
-      user.roles = new Promise<UserRoleEntity[]>((resolve) =>
-        resolve(userRoles),
-      );
+    if (userVo.roles && userVo.roles.length > 0) {
+      const userRoles = await this.userRoleRepository.save(userVo.roles);
+      user.roles = new Promise((resolve) => resolve(userRoles));
     }
 
     return await this.userRepository.save(user);
@@ -59,13 +56,13 @@ export class UserDom {
    * @returns
    */
   public async createValidation(userVo: UserVo): Promise<string> {
-    if (userVo.name) {
+    if (!userVo.name) {
       return '사용자명을 입력하십시오.';
     }
-    if (userVo.email) {
+    if (!userVo.email) {
       return '이메일을 입력하십시오.';
     }
-    if (userVo.password) {
+    if (!userVo.password) {
       return '패스워드를 입력하십시오.';
     }
 

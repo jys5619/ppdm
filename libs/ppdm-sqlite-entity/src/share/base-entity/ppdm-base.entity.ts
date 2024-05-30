@@ -1,5 +1,4 @@
 import { CreateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
-
 export class PpdmBaseEntity {
   @PrimaryGeneratedColumn('uuid', { comment: 'ID' })
   id: string;

@@ -1,24 +1,43 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserDom } from '@doms/ppdm-dom/dom/common';
+import { MenuDom, UserDom } from '@doms/ppdm-dom/dom/common';
 import { SigninDto, SignupDto } from './dto';
 import { JwtPayloadVo, UserInfoVo } from '@doms/ppdm-dom/vo/share';
+import { RoleType } from '@entity/ppdm-sqlite-entity/share/data-type';
+import { ActiveInactiveType } from '@entity/ppdm-sqlite-entity/share/states';
+import { MenuVo } from '@doms/ppdm-dom/vo/common';
+export interface MenuItem {
+  group: string;
+  id: string;
+  url: string;
+  name: string;
+}
 
 @Injectable()
 export class AuthsService {
   constructor(
     private readonly jwtService: JwtService,
     private readonly userDom: UserDom,
+    private readonly menuDom: MenuDom,
   ) {}
 
   async signup(signupDto: SignupDto) {
-    const { user, roles } = signupDto;
-    await this.userDom.create(user, roles);
+    const { user } = signupDto;
+
+    if (!user.roles || user.roles.length === 0) {
+      user.roles = [
+        {
+          name: 'USER' as RoleType,
+        },
+      ];
+    }
+
+    await this.userDom.create(user);
   }
 
   async signin(
     signinDto: SigninDto,
-  ): Promise<{ access_token: string; user: UserInfoVo }> {
+  ): Promise<{ access_token: string; user: UserInfoVo; menus: MenuVo[] }> {
     const { email, password } = signinDto;
     const findUser = await this.userDom.findOneByEmail(email);
 
@@ -51,7 +70,25 @@ export class AuthsService {
     };
 
     const jwt = await this.jwtService.signAsync(payload);
+    const userRoles = await findUser.roles;
+    const roleTypes = userRoles.map((u) => u.name);
+    console.log('FindUser', findUser, userRoles, roleTypes);
 
-    return { access_token: jwt, user: userVo };
+    const menuList = await this.menuDom.findMany({
+      state: ActiveInactiveType.Active,
+      roles: roleTypes,
+    });
+
+    const menus = menuList.map((m) => {
+      return {
+        id: m.id,
+        name: m.name,
+        url: m.url,
+        parentId: m.parentId,
+        sequence: m.sequence,
+      };
+    });
+
+    return { access_token: jwt, user: userVo, menus: menus };
   }
 }

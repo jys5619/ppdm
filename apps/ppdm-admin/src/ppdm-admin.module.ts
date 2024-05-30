@@ -1,4 +1,4 @@
-import { PpdmSqliteEntityModule } from '@app/ppdm-sqlite-entity';
+import { PpdmSqliteEntityModule } from '@entity/ppdm-sqlite-entity';
 import { Module } from '@nestjs/common';
 
 @Module({
