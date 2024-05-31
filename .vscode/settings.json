@@ -1,0 +1,27 @@
+{
+  "sqltools.connections": [
+    {
+      "oracleOptions": {
+        "privilege": "Normal",
+        "thickMode": false,
+        "autoCommit": false,
+        "lowerCase": false,
+        "limitPrefetchRows": false
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 1521,
+      "driver": "Oracle",
+      "name": "ppdm",
+      "database": "ORCL",
+      "username": "ppdm",
+      "password": "ppdm12"
+    },
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "ppdm",
+      "database": "${workspaceFolder:ppdm-server}/db/dev/ppdm.db"
+    }
+  ]
+}

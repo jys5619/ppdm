@@ -9,6 +9,7 @@ import { APP_GUARD } from '@nestjs/core';
 import PpdmAuthGuard from './common/auths/security/ppdm-auth.guard';
 import { PpdmDomModule } from '@doms/ppdm-dom/ppdm-dom.module';
 import { PpdmRolesGuard } from './common/auths/security/ppdm-role.guard';
+import { DataModule } from './data/data.module';
 
 @Module({
   providers: [
@@ -27,6 +28,7 @@ import { PpdmRolesGuard } from './common/auths/security/ppdm-role.guard';
     PpdmDomModule,
     PpdmCommonModule,
     CommonModule,
+    DataModule,
     ShareModule,
   ],
 })

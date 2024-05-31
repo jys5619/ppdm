@@ -275,3 +275,7 @@ nest g res users
     ...
   }
 ```
+
+### 오라클 연결
+
+npm i @types/oracledb oracledb --save

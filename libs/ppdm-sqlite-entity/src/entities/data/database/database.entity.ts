@@ -7,28 +7,66 @@ import { DbType } from '@entity/ppdm-sqlite-entity/share/data-type';
 export class DatabaseEntity extends PpdmBaseEntity {
   @Column({
     type: 'varchar',
-    length: 150,
+    length: 50,
     nullable: false,
-    comment: '사용자명',
+    comment: 'DB타입',
   })
   dbType: DbType;
 
   @Column({
     type: 'varchar',
-    length: 80,
+    length: 100,
     nullable: false,
-    unique: true,
-    comment: '이메일',
+    comment: 'DB명',
   })
-  email: string;
+  dbName: string;
 
   @Column({
     type: 'varchar',
     length: 300,
     nullable: false,
+    comment: 'DB연결문자열',
+  })
+  connectString: string;
+
+  @Column({
+    type: 'varchar',
+    length: 100,
+    comment: '사용자명',
+  })
+  username: string;
+
+  @Column({
+    type: 'varchar',
+    length: 100,
     comment: '패스워드',
   })
   password: string;
+
+  @Column({
+    type: 'varchar',
+    length: 100,
+    comment: 'Pool명',
+  })
+  poolName: string;
+
+  @Column({
+    type: 'integer',
+    comment: 'Pool최소개수',
+  })
+  poolMin: number;
+
+  @Column({
+    type: 'integer',
+    comment: 'Pool최대개수',
+  })
+  poolMax: number;
+
+  @Column({
+    type: 'integer',
+    comment: '최대연결시간',
+  })
+  timeout: number;
 
   @Column({
     type: 'varchar',
