@@ -5,7 +5,7 @@ import {
   UserRepository,
 } from '@entity/ppdm-sqlite-entity/entities/common/user';
 import { UserRoleRepository } from '@entity/ppdm-sqlite-entity/entities/common/user-role';
-import { ActiveInactiveType } from '@entity/ppdm-sqlite-entity/share/states';
+import { ActiveInactiveState } from '@entity/ppdm-sqlite-entity/share/state';
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
@@ -36,10 +36,10 @@ export class UserDom {
       throw new PpdmHttpException(message);
     }
 
-    const user: UserEntity = new UserEntity();
+    const user = new UserEntity();
     user.name = userVo.name;
     user.email = userVo.email;
-    user.state = ActiveInactiveType.Active;
+    user.state = ActiveInactiveState.Active;
     user.password = await bcrypt.hash(userVo.password, 10);
 
     if (userVo.roles && userVo.roles.length > 0) {

@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { UserRoleEntity } from '../user-role/user-role.entity';
 import { PpdmBaseEntity } from '@entity/ppdm-sqlite-entity/share/base-entity/ppdm-base.entity';
-import { ActiveInactiveType } from '@entity/ppdm-sqlite-entity/share/states';
+import { ActiveInactiveState } from '@entity/ppdm-sqlite-entity/share/state';
 
 @Entity({ name: 'TB_USER', comment: '사용자' })
 export class UserEntity extends PpdmBaseEntity {
@@ -36,7 +36,7 @@ export class UserEntity extends PpdmBaseEntity {
     nullable: false,
     comment: '상태',
   })
-  state: ActiveInactiveType;
+  state: ActiveInactiveState;
 
   @OneToMany(() => UserRoleEntity, (userRoleEntity) => userRoleEntity.user, {
     onDelete: 'CASCADE',

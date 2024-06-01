@@ -4,7 +4,7 @@ import { MenuDom, UserDom } from '@doms/ppdm-dom/dom/common';
 import { SigninDto, SignupDto } from './dto';
 import { JwtPayloadVo, UserInfoVo } from '@doms/ppdm-dom/vo/share';
 import { RoleType } from '@entity/ppdm-sqlite-entity/share/data-type';
-import { ActiveInactiveType } from '@entity/ppdm-sqlite-entity/share/states';
+import { ActiveInactiveState } from '@entity/ppdm-sqlite-entity/share/state';
 import { MenuVo } from '@doms/ppdm-dom/vo/common';
 export interface MenuItem {
   group: string;
@@ -75,7 +75,7 @@ export class AuthsService {
     console.log('FindUser', findUser, userRoles, roleTypes);
 
     const menuList = await this.menuDom.findMany({
-      state: ActiveInactiveType.Active,
+      state: ActiveInactiveState.Active,
       roles: roleTypes,
     });
 

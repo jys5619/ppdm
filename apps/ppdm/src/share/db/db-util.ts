@@ -1,14 +1,14 @@
-import { BindParameters, Connection } from 'oracledb';
+import { BindParameters, Connection, getConnection } from 'oracledb';
 import DbPool from './db-pool';
 import { IDbConfig } from '.';
 
 export function DbUtil() {
-  const getDirectConnection = async (
-    dbconfig: IDbConfig,
-  ): Promise<Connection> => {
-    const dbPool = DbPool();
-
-    const connection = await dbPool.getConn(dbconfig);
+  const getDirectConn = async (dbConfig: IDbConfig): Promise<Connection> => {
+    const connection = getConnection({
+      user: dbConfig.username,
+      password: dbConfig.password,
+      connectString: dbConfig.connectString,
+    });
 
     if (!connection) {
       throw Error('Connection정보가 생성되지 않았습니다.');
@@ -17,11 +17,10 @@ export function DbUtil() {
     return connection;
   };
 
-  const connectTest = async (dbconfig: IDbConfig): Promise<string> => {
+  const connectTest = async (dbConfig: IDbConfig): Promise<string> => {
     let result = '연결 테스트 성공';
 
-    const connection = await getDirectConnection(dbconfig);
-
+    const connection = await getDirectConn(dbConfig);
     try {
       const result = await connection.execute(`SELECT 1 FROM DUAL`);
       console.log('Result : ', result.rows);
@@ -34,10 +33,10 @@ export function DbUtil() {
     return result;
   };
 
-  const getConnection = async (dbconfig: IDbConfig): Promise<Connection> => {
+  const getConn = async (dbConfig: IDbConfig): Promise<Connection> => {
     const dbPool = DbPool();
 
-    const connection = await dbPool.getConn(dbconfig);
+    const connection = await dbPool.getConn(dbConfig);
 
     if (!connection) {
       throw Error('Connection정보가 생성되지 않았습니다.');
@@ -47,11 +46,11 @@ export function DbUtil() {
   };
 
   const select = async (
-    dbconfig: IDbConfig,
+    dbConfig: IDbConfig,
     sql: string,
     param?: BindParameters,
   ) => {
-    const connection = await getConnection(dbconfig);
+    const connection = await getConn(dbConfig);
     const result = await connection.execute(sql, param);
     console.log('Result is:', result.rows?.length);
     await connection.close();

@@ -7,7 +7,6 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "postbuild": "node ../ppdm-faker/build/main.js",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "build": "npm run prebuild && nest build ppdm --tsc",
     "build:admin": "npm run prebuild && nest build ppdm-admin --tsc",

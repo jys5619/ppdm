@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { PpdmBaseEntity } from '@entity/ppdm-sqlite-entity/share/base-entity/ppdm-base.entity';
-import { ActiveInactiveType } from '@entity/ppdm-sqlite-entity/share/states';
+import { ActiveInactiveState } from '@entity/ppdm-sqlite-entity/share/state';
 import { MenuRoleEntity } from '../menu-role';
 
 @Entity({ name: 'TB_MENU', comment: '메뉴' })
@@ -26,7 +26,7 @@ export class MenuEntity extends PpdmBaseEntity {
     nullable: false,
     comment: '상태',
   })
-  state: ActiveInactiveType;
+  state: ActiveInactiveState;
 
   @Column({
     type: 'integer',

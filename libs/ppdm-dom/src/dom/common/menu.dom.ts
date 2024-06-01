@@ -6,7 +6,7 @@ import {
 } from '@entity/ppdm-sqlite-entity/entities/common/menu';
 import { MenuRoleRepository } from '@entity/ppdm-sqlite-entity/entities/common/menu-role';
 import { RoleType } from '@entity/ppdm-sqlite-entity/share/data-type';
-import { ActiveInactiveType } from '@entity/ppdm-sqlite-entity/share/states';
+import { ActiveInactiveState } from '@entity/ppdm-sqlite-entity/share/state';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -30,7 +30,7 @@ export class MenuDom {
     name?: string;
     roles?: RoleType[];
     parentId?: string;
-    state?: ActiveInactiveType;
+    state?: ActiveInactiveState;
   }): Promise<MenuEntity[]> {
     return await this.menuRepository.findMany({ name, roles, parentId, state });
   }
@@ -70,7 +70,7 @@ export class MenuDom {
     const menu: MenuEntity = new MenuEntity();
     menu.name = menuVo.name;
     menu.url = menuVo.url;
-    menu.state = ActiveInactiveType.Active;
+    menu.state = ActiveInactiveState.Active;
     menu.menu =
       menuVo.parentId &&
       this.menuRepository.findOne({ where: { id: menuVo.parentId } });

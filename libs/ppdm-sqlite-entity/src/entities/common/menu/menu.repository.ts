@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 import { CustomRepository } from '@entity/ppdm-sqlite-entity/share/customer-repository';
 import { MenuEntity } from './menu.entity';
-import { ActiveInactiveType } from '@entity/ppdm-sqlite-entity/share/states';
+import { ActiveInactiveState } from '@entity/ppdm-sqlite-entity/share/state';
 import { RoleType } from '@entity/ppdm-sqlite-entity/share/data-type';
 
 @CustomRepository(MenuEntity)
@@ -15,7 +15,7 @@ export class MenuRepository extends Repository<MenuEntity> {
     name?: string;
     roles?: RoleType[];
     parentId?: string;
-    state?: ActiveInactiveType;
+    state?: ActiveInactiveState;
   }): Promise<MenuEntity[]> {
     const qb = this.createQueryBuilder('MenuEntity').innerJoin(
       'MenuEntity.roles',

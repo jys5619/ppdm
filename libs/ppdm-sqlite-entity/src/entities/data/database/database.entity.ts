@@ -1,6 +1,6 @@
 import { Column, Entity } from 'typeorm';
 import { PpdmBaseEntity } from '@entity/ppdm-sqlite-entity/share/base-entity/ppdm-base.entity';
-import { ActiveInactiveType } from '@entity/ppdm-sqlite-entity/share/states';
+import { ActiveInactiveState } from '@entity/ppdm-sqlite-entity/share/state';
 import { DbType } from '@entity/ppdm-sqlite-entity/share/data-type';
 
 @Entity({ name: 'TB_DATABASE', comment: 'DB정보' })
@@ -32,7 +32,7 @@ export class DatabaseEntity extends PpdmBaseEntity {
   @Column({
     type: 'varchar',
     length: 100,
-    comment: '사용자명',
+    comment: '사용자',
   })
   username: string;
 
@@ -74,5 +74,5 @@ export class DatabaseEntity extends PpdmBaseEntity {
     nullable: false,
     comment: '상태',
   })
-  state: ActiveInactiveType;
+  state: ActiveInactiveState;
 }

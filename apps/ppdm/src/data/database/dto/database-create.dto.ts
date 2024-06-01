@@ -1,3 +1,5 @@
+import { DbType } from '@entity/ppdm-sqlite-entity/share/data-type';
+import { ActiveInactiveState } from '@entity/ppdm-sqlite-entity/share/state';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class DatabaseCreateDto {
@@ -5,7 +7,7 @@ export class DatabaseCreateDto {
     description: 'dbType',
     example: 'ORACLE',
   })
-  dbType: string;
+  dbType: DbType;
 
   @ApiProperty({
     description: 'dbName',
@@ -54,4 +56,10 @@ export class DatabaseCreateDto {
     example: 300,
   })
   timeout?: number;
+
+  @ApiProperty({
+    description: 'state',
+    example: 'Active',
+  })
+  state?: ActiveInactiveState;
 }

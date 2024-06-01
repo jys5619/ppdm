@@ -10,6 +10,7 @@ import PpdmAuthGuard from './common/auths/security/ppdm-auth.guard';
 import { PpdmDomModule } from '@doms/ppdm-dom/ppdm-dom.module';
 import { PpdmRolesGuard } from './common/auths/security/ppdm-role.guard';
 import { DataModule } from './data/data.module';
+import SystemUtil from './share/util/system.util';
 
 @Module({
   providers: [
@@ -32,4 +33,9 @@ import { DataModule } from './data/data.module';
     ShareModule,
   ],
 })
-export class PpdmModule {}
+export class PpdmModule {
+  constructor() {
+    const systemUtil = SystemUtil.getInstance();
+    console.log(`${systemUtil.path.appsRoot}${systemUtil.env.db.entityPath}`);
+  }
+}

@@ -1,4 +1,4 @@
-export enum ActiveInactiveType {
+export enum ActiveInactiveState {
   Active = 'Active',
   Inactive = 'Inactive',
 }
