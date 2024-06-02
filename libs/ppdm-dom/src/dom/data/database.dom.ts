@@ -5,6 +5,12 @@ import {
   DatabaseRepository,
 } from '@entity/ppdm-sqlite-entity/entities/data/database';
 import { Injectable } from '@nestjs/common';
+import {
+  BindParameters,
+  Connection,
+  createPool,
+  getConnection,
+} from 'oracledb';
 
 @Injectable()
 export class DatabaseDom {
@@ -29,10 +35,6 @@ export class DatabaseDom {
     if (message) {
       throw new PpdmHttpException(message);
     }
-
-    // const database = new DatabaseEntity();
-    // database.dbType = databaseVo.dbType;
-    // database.dbName = databaseVo.dbName;
 
     return await this.databaseRepository.save(databaseVo);
   }
@@ -69,5 +71,82 @@ export class DatabaseDom {
     return await this.databaseRepository.findOne({
       where: { dbName },
     });
+  }
+
+  private async getDirectConnection(
+    databaseVo: DatabaseVo,
+  ): Promise<Connection> {
+    const connection = getConnection({
+      user: databaseVo.username,
+      password: databaseVo.password,
+      connectString: databaseVo.connectString,
+      connectTimeout: databaseVo.timeout || 300,
+    });
+
+    if (!connection) {
+      throw Error('Connection정보가 생성되지 않았습니다.');
+    }
+
+    return connection;
+  }
+
+  private async getPoolConnection(databaseVo: DatabaseVo): Promise<Connection> {
+    const key = `P${databaseVo.id}`;
+
+    if (databaseVo.dbType === 'ORACLE') {
+      let connection = undefined;
+      try {
+        connection = await getConnection(key);
+      } catch (e) {}
+
+      if (!connection) {
+        await createPool({
+          user: databaseVo.username,
+          password: databaseVo.password,
+          connectString: databaseVo.connectString,
+          poolMin: databaseVo.poolMin, // 1,
+          poolMax: databaseVo.poolMax, //10,
+          poolTimeout: databaseVo.timeout || 300,
+          poolAlias: key,
+        });
+        connection = await getConnection(key);
+      }
+
+      return connection;
+    }
+  }
+
+  private async getConnection(databaseVo: DatabaseVo): Promise<Connection> {
+    if (databaseVo.poolMin && databaseVo.poolMax) {
+      return await this.getPoolConnection(databaseVo);
+    } else {
+      return await this.getDirectConnection(databaseVo);
+    }
+  }
+
+  public async connectTest(databaseVo: DatabaseVo): Promise<string> {
+    let result = '연결 테스트 성공';
+
+    const connection = await this.getDirectConnection(databaseVo);
+    try {
+      const result = await connection.execute(`SELECT 1 FROM DUAL`);
+      console.log('Result : ', result.rows);
+    } catch (e) {
+      result = e.message;
+    } finally {
+      await connection.close();
+    }
+
+    return result;
+  }
+
+  public async executeQuery(id: string, sql: string, param?: BindParameters) {
+    const database = await this.databaseRepository.findOne({ where: { id } });
+    const databaseVo: DatabaseVo = { ...database };
+    const connection = await getConnection(databaseVo);
+
+    const result = await connection.execute(sql, param);
+    console.log('Result is:', result.rows?.length);
+    await connection.close();
   }
 }

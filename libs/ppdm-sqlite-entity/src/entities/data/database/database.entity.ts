@@ -44,13 +44,6 @@ export class DatabaseEntity extends PpdmBaseEntity {
   password: string;
 
   @Column({
-    type: 'varchar',
-    length: 100,
-    comment: 'Pool명',
-  })
-  poolName: string;
-
-  @Column({
     type: 'integer',
     comment: 'Pool최소개수',
   })
@@ -67,6 +60,13 @@ export class DatabaseEntity extends PpdmBaseEntity {
     comment: '최대연결시간',
   })
   timeout: number;
+
+  @Column({
+    type: 'varchar',
+    length: 4000,
+    comment: 'DB 정보', // USER권한 사용자에게 보여줄 정보
+  })
+  dbInfo: string;
 
   @Column({
     type: 'varchar',

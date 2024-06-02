@@ -8,9 +8,9 @@ export interface DatabaseVo extends PpdmBaseVo {
   connectString: string;
   username?: string;
   password?: string;
-  poolName?: string;
   poolMin?: number;
   poolMax?: number;
   timeout?: number;
+  dbInfo?: string;
   state?: ActiveInactiveState;
 }

@@ -1,6 +1,5 @@
 import { DatabaseDom } from '@doms/ppdm-dom/dom/data';
 import { Injectable } from '@nestjs/common';
-import { DbUtil, IDbConfig } from '../../share/db';
 import { DatabaseEntity } from '@entity/ppdm-sqlite-entity/entities/data/database';
 import { DatabaseCreateDto } from './dto/database-create.dto';
 
@@ -9,12 +8,9 @@ export class DatabaseService {
   constructor(private readonly databaseDom: DatabaseDom) {}
 
   async connectionTest(databaseCreateDto: DatabaseCreateDto): Promise<string> {
-    const dbUtil = DbUtil();
     let result = '';
     try {
-      const dbConfig: IDbConfig = { ...databaseCreateDto };
-
-      result = await dbUtil.connectTest(dbConfig);
+      result = await this.databaseDom.connectTest(databaseCreateDto);
     } catch (e) {
       result = e.message;
     }
