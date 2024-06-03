@@ -31,15 +31,22 @@ export class QueryFormDom {
    * @param id
    * @returns
    */
-  public async get(id: string): Promise<QueryFormEntity> {
+  public async get(id: string): Promise<QueryFormVo> {
     const queryFormEntity = await this.queryFormRepository.findOne({
       where: { id },
     });
 
-    await queryFormEntity.inputList;
-    await queryFormEntity.sqlList;
+    const inputList = await queryFormEntity.inputList;
+    const sqlList = await queryFormEntity.sqlList;
 
-    return queryFormEntity;
+    const queryFormVo: QueryFormVo = {
+      ...queryFormEntity,
+      inputList,
+      sqlList,
+    };
+
+    console.log('queryFormEntity', queryFormEntity, queryFormVo);
+    return queryFormVo;
   }
 
   /**
