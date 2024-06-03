@@ -35,7 +35,7 @@ export class QueryFormInputEntity extends PpdmBaseEntity {
     nullable: true,
     comment: '데이터값',
   })
-  values: string;
+  arrayData: string;
 
   @ManyToOne(
     () => QueryFormEntity,

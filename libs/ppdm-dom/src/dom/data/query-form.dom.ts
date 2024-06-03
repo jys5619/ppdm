@@ -98,8 +98,8 @@ export class QueryFormDom {
         if (!input.type) {
           return 'Input 종류를 입력하십시오.';
         }
-        if (input.type === QueryFormInputType.SELECT && !input.values) {
-          return 'Input Select값을 입력하십시오.';
+        if (input.type === QueryFormInputType.SELECT && !input.arrayData) {
+          return 'Select에 출력할 값을 입력하십시오.';
         }
       }
     }

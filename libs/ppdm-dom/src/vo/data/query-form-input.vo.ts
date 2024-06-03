@@ -5,5 +5,5 @@ export interface QueryFormInputVo extends PpdmBaseVo {
   name?: string;
   title?: string;
   type?: QueryFormInputType;
-  values?: string;
+  arrayData?: string;
 }

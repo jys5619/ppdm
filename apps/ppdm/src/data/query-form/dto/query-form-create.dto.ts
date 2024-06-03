@@ -24,8 +24,8 @@ export class QueryFormCreateDto {
   @ApiProperty({
     description: '입력값',
     example: [
-      { name: 'v1', title: 'V1필드', type: 'INPUT', values: '' },
-      { name: 'v2', title: 'V2필드', type: 'SELECT', values: 'AA|BB|CC' },
+      { name: 'v1', title: 'V1필드', type: 'INPUT', arrayData: '' },
+      { name: 'v2', title: 'V2필드', type: 'SELECT', arrayData: 'AA|BB|CC' },
     ],
   })
   inputList?: QueryFormInputVo[];
