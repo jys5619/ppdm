@@ -34,6 +34,7 @@ export class MenuDom {
   }): Promise<MenuEntity[]> {
     return await this.menuRepository.findMany({ name, roles, parentId, state });
   }
+
   /**
    * 사용자 정보를 생성한다.
    * @param userVo
