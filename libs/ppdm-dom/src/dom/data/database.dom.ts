@@ -4,6 +4,7 @@ import {
   DatabaseEntity,
   DatabaseRepository,
 } from '@entity/ppdm-sqlite-entity/entities/data/database';
+import { ActiveInactiveState } from '@entity/ppdm-sqlite-entity/share/state';
 import { Injectable } from '@nestjs/common';
 import {
   BindParameters,
@@ -15,6 +16,19 @@ import {
 @Injectable()
 export class DatabaseDom {
   constructor(private readonly databaseRepository: DatabaseRepository) {}
+
+  /**
+   * ID로 Database 정보를 조회한다.
+   * @param id
+   * @returns
+   */
+  public async getList(
+    state: ActiveInactiveState = ActiveInactiveState.Active,
+  ): Promise<DatabaseEntity[]> {
+    return await this.databaseRepository.find({
+      where: { state },
+    });
+  }
 
   /**
    * ID로 Database 정보를 조회한다.
@@ -146,7 +160,8 @@ export class DatabaseDom {
     const connection = await getConnection(databaseVo);
 
     const result = await connection.execute(sql, param);
-    console.log('Result is:', result.rows?.length);
     await connection.close();
+    console.log('Database Result', result);
+    return result;
   }
 }

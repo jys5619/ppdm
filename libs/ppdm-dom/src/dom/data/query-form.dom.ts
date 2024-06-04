@@ -18,38 +18,6 @@ export class QueryFormDom {
   ) {}
 
   /**
-   *  Query Form 정보를 조회한다.
-   * @param id
-   * @returns
-   */
-  public async findMany(): Promise<QueryFormEntity[]> {
-    return await this.queryFormRepository.find();
-  }
-
-  /**
-   * ID로 Query Form 정보를 조회한다.
-   * @param id
-   * @returns
-   */
-  public async get(id: string): Promise<QueryFormVo> {
-    const queryFormEntity = await this.queryFormRepository.findOne({
-      where: { id },
-    });
-
-    const inputList = await queryFormEntity.inputList;
-    const sqlList = await queryFormEntity.sqlList;
-
-    const queryFormVo: QueryFormVo = {
-      ...queryFormEntity,
-      inputList,
-      sqlList,
-    };
-
-    console.log('queryFormEntity', queryFormEntity, queryFormVo);
-    return queryFormVo;
-  }
-
-  /**
    * Query Form 정보를 생성한다.
    * @param userVo
    * @param userRoleList
@@ -85,7 +53,7 @@ export class QueryFormDom {
   }
 
   /**
-   * 사용자 정보를 검증한다.
+   * Query Form 정보를 검증한다.
    * @param userVo
    * @returns
    */
@@ -123,5 +91,36 @@ export class QueryFormDom {
         }
       }
     }
+  }
+
+  /**
+   *  Query Form 정보를 조회한다.
+   * @param id
+   * @returns
+   */
+  public async findMany(): Promise<QueryFormEntity[]> {
+    return await this.queryFormRepository.find();
+  }
+
+  /**
+   * ID로 Query Form 정보를 조회한다.
+   * @param id
+   * @returns
+   */
+  public async get(id: string): Promise<QueryFormVo> {
+    const queryFormEntity = await this.queryFormRepository.findOne({
+      where: { id },
+    });
+
+    const inputList = await queryFormEntity.inputList;
+    const sqlList = await queryFormEntity.sqlList;
+
+    const queryFormVo: QueryFormVo = {
+      ...queryFormEntity,
+      inputList,
+      sqlList,
+    };
+
+    return queryFormVo;
   }
 }

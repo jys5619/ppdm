@@ -18,13 +18,15 @@ export class DatabaseService {
     return result;
   }
 
-  async getDatabase(id: string): Promise<DatabaseEntity> {
-    return this.databaseDom.get(id);
+  async getList(): Promise<DatabaseEntity[]> {
+    return await this.databaseDom.getList();
   }
 
-  async createDatabase(
-    databaseCreateDto: DatabaseCreateDto,
-  ): Promise<DatabaseEntity> {
-    return this.databaseDom.create(databaseCreateDto);
+  async get(id: string): Promise<DatabaseEntity> {
+    return await this.databaseDom.get(id);
+  }
+
+  async create(databaseCreateDto: DatabaseCreateDto): Promise<DatabaseEntity> {
+    return await this.databaseDom.create(databaseCreateDto);
   }
 }

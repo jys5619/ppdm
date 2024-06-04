@@ -31,4 +31,15 @@ export class QueryFormController {
     console.log('queryFormCreateDto', queryFormCreateDto);
     return await this.queryFormService.create(queryFormCreateDto);
   }
+
+  @ApiOperation({ summary: 'Query Form 조회' })
+  @PpdmPublicAuth()
+  @Put('/id')
+  async runQueryForm(
+    @Param('id') queryFormId: string,
+    @Body('databaseId') databaseId: string,
+    @Body('inputData') inputData: { [x: string]: string | number | undefined },
+  ) {
+    return await this.queryFormService.run(databaseId, queryFormId, inputData);
+  }
 }

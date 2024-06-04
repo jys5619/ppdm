@@ -18,17 +18,24 @@ export class DatabaseController {
     return await this.databaseService.connectionTest(databaseCreateDto);
   }
 
+  @ApiOperation({ summary: 'DB 목록 조회' })
+  @PpdmPublicAuth()
+  @Get()
+  async getDatabaseList() {
+    return await this.databaseService.getList();
+  }
+
   @ApiOperation({ summary: 'DB 조회' })
   @PpdmPublicAuth()
   @Get('/:id')
   async getDatabase(@Param('id') id: string) {
-    return await this.databaseService.getDatabase(id);
+    return await this.databaseService.get(id);
   }
 
   @ApiOperation({ summary: 'DB 저장' })
   @PpdmPublicAuth()
   @Post()
   async createDatabase(@Body() databaseCreateDto: DatabaseCreateDto) {
-    return await this.databaseService.createDatabase(databaseCreateDto);
+    return await this.databaseService.create(databaseCreateDto);
   }
 }
