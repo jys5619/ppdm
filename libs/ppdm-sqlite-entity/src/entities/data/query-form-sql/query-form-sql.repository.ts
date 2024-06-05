@@ -10,7 +10,7 @@ export class QueryFormSqlRepository extends Repository<QueryFormSqlEntity> {
     const qb = this.createQueryBuilder('QueryFormSqlEntity');
 
     if (queryFormId)
-      qb.andWhere('QueryFormSqlEntity.queryFormId = :queryFormId', {
+      qb.andWhere('QueryFormSqlEntity.query_form_id = :queryFormId', {
         queryFormId,
       });
     return await qb.getMany();

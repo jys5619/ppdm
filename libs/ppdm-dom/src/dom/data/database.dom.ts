@@ -130,7 +130,7 @@ export class DatabaseDom {
     }
   }
 
-  private async getConnection(databaseVo: DatabaseVo): Promise<Connection> {
+  private async getConn(databaseVo: DatabaseVo): Promise<Connection> {
     if (databaseVo.poolMin && databaseVo.poolMax) {
       return await this.getPoolConnection(databaseVo);
     } else {
@@ -143,8 +143,7 @@ export class DatabaseDom {
 
     const connection = await this.getDirectConnection(databaseVo);
     try {
-      const result = await connection.execute(`SELECT 1 FROM DUAL`);
-      console.log('Result : ', result.rows);
+      await connection.execute(`SELECT 1 FROM DUAL`);
     } catch (e) {
       result = e.message;
     } finally {
@@ -157,11 +156,25 @@ export class DatabaseDom {
   public async executeQuery(id: string, sql: string, param?: BindParameters) {
     const database = await this.databaseRepository.findOne({ where: { id } });
     const databaseVo: DatabaseVo = { ...database };
-    const connection = await getConnection(databaseVo);
+    const connection = await this.getConn(databaseVo);
 
-    const result = await connection.execute(sql, param);
+    const selectData = await connection.execute(sql, param);
     await connection.close();
-    console.log('Database Result', result);
+
+    const result = { id: '', metaData: [], rows: [] };
+
+    if (selectData) {
+      for (const meta of selectData.metaData) {
+        result.metaData.push({ name: meta.name, dbType: meta.dbTypeName });
+      }
+      for (const row of selectData.rows) {
+        const item: { [x: string]: string | number | null | undefined } = {};
+        for (let i = 0; i < result.metaData.length; i++) {
+          item[result.metaData[i].name] = row[i];
+        }
+        result.rows.push(item);
+      }
+    }
     return result;
   }
 }

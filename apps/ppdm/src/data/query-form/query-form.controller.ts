@@ -32,14 +32,19 @@ export class QueryFormController {
     return await this.queryFormService.create(queryFormCreateDto);
   }
 
-  @ApiOperation({ summary: 'Query Form 조회' })
+  @ApiOperation({ summary: 'Query Form 실행' })
   @PpdmPublicAuth()
-  @Put('/id')
+  @Put('/run')
   async runQueryForm(
-    @Param('id') queryFormId: string,
     @Body('databaseId') databaseId: string,
-    @Body('inputData') inputData: { [x: string]: string | number | undefined },
+    @Body('queryFormId') queryFormId: string,
+    @Body('inputData')
+    inputData: { [x: string]: string | number | null | undefined },
   ) {
-    return await this.queryFormService.run(databaseId, queryFormId, inputData);
+    return await this.queryFormService.runSql(
+      databaseId,
+      queryFormId,
+      inputData,
+    );
   }
 }

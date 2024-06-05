@@ -28,20 +28,25 @@ export class QueryFormService {
     return this.queryFormDom.create(queryFormCreateDto);
   }
 
-  async run(
+  async runSql(
     databaseId: string,
     queryFormId: string,
-    inputData: { [x: string]: string | number | undefined },
+    inputData: { [x: string]: string | number | null | undefined },
   ) {
     const queryFormSqlList =
       await this.queryFormSqlDom.findManyByQueryFormId(queryFormId);
 
+    const result = [];
     for (const queryFormSql of queryFormSqlList) {
-      await this.databaseDom.executeQuery(
+      const selectData = await this.databaseDom.executeQuery(
         databaseId,
         queryFormSql.sql,
         inputData,
       );
+      selectData.id = queryFormSql.id;
+      result.push(selectData);
     }
+
+    return result;
   }
 }
