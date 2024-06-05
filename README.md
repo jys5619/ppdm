@@ -279,3 +279,5 @@ nest g res users
 ### 오라클 연결
 
 npm i @types/oracledb oracledb --save
+npm i -D @faker-js/faker
+npm i /faker

@@ -6,13 +6,13 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "rimraf dist",
+    "removedist": "rimraf dist",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
-    "build": "npm run prebuild && nest build ppdm --tsc",
-    "build:admin": "npm run prebuild && nest build ppdm-admin --tsc",
-    "build:batch": "npm run prebuild && nest build ppdm-batch --tsc",
-    "start": "npm run prebuild && cross-env NODE_ENV=dev nest start ppdm --tsc",
-    "start:dev": "npm run prebuild && cross-env NODE_ENV=dev nest start ppdm --tsc --watch",
+    "build": "npm run removedist && nest build ppdm --tsc",
+    "build:admin": "npm run removedist && nest build ppdm-admin --tsc",
+    "build:batch": "npm run removedist && nest build ppdm-batch --tsc",
+    "start": "npm run removedist && cross-env NODE_ENV=dev nest start ppdm --tsc",
+    "start:dev": "npm run removedist && cross-env NODE_ENV=dev nest start ppdm --tsc --watch",
     "start:admin": "nest start ppdm-admin --tsc",
     "start:batch": "nest start ppdm-batch --tsc",
     "start:dev:admin": "nest start ppdm-admin --watch --tsc",
@@ -24,7 +24,9 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/ppdm/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/ppdm/test/jest-e2e.json",
+    "removebuild": "rimraf build",
+    "data": "npm run removebuild && tsc -build ./apps/ppdm-db-init && node ./build/apps/ppdm-init-data/main.dev.js"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -42,6 +44,7 @@
     "better-sqlite3": "^9.6.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "faker": "^6.6.6",
     "oracledb": "^6.5.1",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.0",
@@ -52,6 +55,7 @@
     "typeorm-naming-strategies": "^4.1.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
