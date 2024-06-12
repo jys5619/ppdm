@@ -7,15 +7,10 @@ import { DatabaseCreateDto } from './dto/database-create.dto';
 export class DatabaseService {
   constructor(private readonly databaseDom: DatabaseDom) {}
 
-  async connectionTest(databaseCreateDto: DatabaseCreateDto): Promise<string> {
-    let result = '';
-    try {
-      result = await this.databaseDom.connectTest(databaseCreateDto);
-    } catch (e) {
-      result = e.message;
-    }
-
-    return result;
+  async connectionTest(
+    databaseCreateDto: DatabaseCreateDto,
+  ): Promise<{ state: string; message: string }> {
+    return await this.databaseDom.connectTest(databaseCreateDto);
   }
 
   async getList(): Promise<DatabaseEntity[]> {

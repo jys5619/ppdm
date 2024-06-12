@@ -14,7 +14,7 @@ export class DatabaseController {
   @Put('connection-test')
   async connectionTest(
     @Body() databaseCreateDto: DatabaseCreateDto,
-  ): Promise<string> {
+  ): Promise<{ state: string; message: string }> {
     return await this.databaseService.connectionTest(databaseCreateDto);
   }
 
@@ -36,6 +36,7 @@ export class DatabaseController {
   @PpdmPublicAuth()
   @Post()
   async createDatabase(@Body() databaseCreateDto: DatabaseCreateDto) {
+    console.log(databaseCreateDto);
     return await this.databaseService.create(databaseCreateDto);
   }
 }

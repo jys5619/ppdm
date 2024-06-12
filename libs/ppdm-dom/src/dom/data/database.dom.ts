@@ -138,16 +138,21 @@ export class DatabaseDom {
     }
   }
 
-  public async connectTest(databaseVo: DatabaseVo): Promise<string> {
-    let result = '연결 테스트 성공';
+  public async connectTest(
+    databaseVo: DatabaseVo,
+  ): Promise<{ state: string; message: string }> {
+    let result = { state: 'success', message: 'Connection Test Success' };
 
-    const connection = await this.getDirectConnection(databaseVo);
+    let connection = null;
     try {
+      connection = await this.getDirectConnection(databaseVo);
       await connection.execute(`SELECT 1 FROM DUAL`);
     } catch (e) {
-      result = e.message;
+      result = { state: 'error', message: e.message };
     } finally {
-      await connection.close();
+      try {
+        if (connection) await connection.close();
+      } catch (e) {}
     }
 
     return result;
