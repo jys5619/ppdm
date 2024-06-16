@@ -31,6 +31,14 @@ export class QueryFormInputEntity extends PpdmBaseEntity {
 
   @Column({
     type: 'varchar',
+    length: 500,
+    nullable: true,
+    comment: '기본값',
+  })
+  defaultValue: string;
+
+  @Column({
+    type: 'varchar',
     length: 2000,
     nullable: true,
     comment: '데이터값',

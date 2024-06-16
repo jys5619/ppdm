@@ -1,6 +1,6 @@
 import { PpdmBaseVo } from '../share';
 
-export interface QueryFormSqlVo extends PpdmBaseVo {
+export interface SqlVo extends PpdmBaseVo {
   title?: string;
   description?: string;
   sql?: string;

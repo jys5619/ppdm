@@ -1,8 +1,10 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToMany, OneToMany } from 'typeorm';
 import { PpdmBaseEntity } from '@entity/ppdm-sqlite-entity/share/base-entity/ppdm-base.entity';
 import { ActiveInactiveState } from '@entity/ppdm-sqlite-entity/share/state';
 import { QueryFormInputEntity } from '../query-form-input';
-import { QueryFormSqlEntity } from '../query-form-sql';
+import { ProgramMenuEntity } from '../../programs/program-menu/program-menu.entity';
+import { ProgramFlowEntity } from '../../programs/program-flow/program-flow.entity';
+import { QueryFormRelSqlEntity } from '../query-form-rel-sql/query-form-rel-sql.entity';
 
 @Entity({ name: 'TB_QUERY_FORM', comment: 'DB정보' })
 export class QueryFormEntity extends PpdmBaseEntity {
@@ -29,6 +31,17 @@ export class QueryFormEntity extends PpdmBaseEntity {
   })
   description: string;
 
+  @Column({
+    type: 'varchar',
+    length: 50,
+    nullable: false,
+    comment: '상태',
+  })
+  state: ActiveInactiveState;
+
+  /**
+   * TB_QUERY_FORM(1) => (N)TB_QUERY_FORM_INPUT
+   */
   @OneToMany(
     () => QueryFormInputEntity,
     (queryFormInputEntity) => queryFormInputEntity.queryForm,
@@ -39,21 +52,28 @@ export class QueryFormEntity extends PpdmBaseEntity {
   )
   inputList: Promise<QueryFormInputEntity[]>;
 
+  /**
+   * TB_QUERY_FORM(1) => (N)TB_QUERY_FORM_REL_SQL(N) <= (1)TB_SQL
+   */
   @OneToMany(
-    () => QueryFormSqlEntity,
-    (queryFormSqlEntity) => queryFormSqlEntity.queryForm,
+    () => QueryFormRelSqlEntity,
+    (queryFormRelSqlEntity) => queryFormRelSqlEntity.queryForm,
     {
       onDelete: 'CASCADE',
       lazy: true,
     },
   )
-  sqlList: Promise<QueryFormSqlEntity[]>;
+  queryFormRelSqlList: Promise<QueryFormRelSqlEntity[]>;
 
-  @Column({
-    type: 'varchar',
-    length: 50,
-    nullable: false,
-    comment: '상태',
-  })
-  state: ActiveInactiveState;
+  /**
+   * TB_PROGRAM_MENU(N) -> (N)TB_QUERY_FORM
+   */
+  @ManyToMany(() => ProgramMenuEntity, { cascade: true })
+  programMenuList: ProgramMenuEntity[];
+
+  /**
+   * TB_PROGRAM_FLOW(N) -> (N)TB_QUERY_FORM
+   */
+  @ManyToMany(() => ProgramFlowEntity, { cascade: true })
+  programFlowList: ProgramFlowEntity[];
 }

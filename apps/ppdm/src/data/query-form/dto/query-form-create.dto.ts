@@ -1,4 +1,4 @@
-import { QueryFormInputVo, QueryFormSqlVo } from '@doms/ppdm-dom/vo/data';
+import { QueryFormInputVo, SqlVo } from '@doms/ppdm-dom/vo/data';
 import { ActiveInactiveState } from '@entity/ppdm-sqlite-entity/share/state';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -45,7 +45,7 @@ export class QueryFormCreateDto {
       },
     ],
   })
-  sqlList?: QueryFormSqlVo[];
+  sqlList?: SqlVo[];
 
   @ApiProperty({
     description: '상태값',

@@ -122,17 +122,20 @@ JOB: PRESIDENT, MANAGER, SALESMAN, CLERK, ANALYST`,
 
     if (data.sqlList && data.sqlList.length > 0) {
       data.sqlList.forEach((sql) => {
+        const sqlId = faker.string.uuid();
         result.push(
-          `INSERT INTO TB_QUERY_FORM_SQL (ID, TITLE, DESCRIPTION, SQL, QUERY_FORM_ID, CREATED_AT, UPDATED_AT) VALUES ('${faker.string.uuid()}','${
-            sql.title
-          }','${sql.description}','${sql.sql}','${data.id}','${data.createdAt}', '${
-            data.updatedAt
-          }');`,
+          `INSERT INTO TB_SQL (ID, TITLE, DESCRIPTION, SQL, CREATED_AT, UPDATED_AT) VALUES ('${sqlId}','${sql.title}','${sql.description}','${sql.sql}','${data.createdAt}', '${data.updatedAt}');`,
+        );
+        result.push(
+          `INSERT INTO TB_QUERY_FORM_REL_SQL (ID, QUERY_FORM_ID, SQL_ID, STATE, CREATED_AT, UPDATED_AT) VALUES ('${faker.string.uuid()}','${data.id}','${sqlId}','Active','${data.createdAt}', '${data.updatedAt}');`,
         );
       });
     }
   });
 
-  console.log('CREATE TB_QUERY_FORM'.padEnd(80, '-') + `(${result.length})`);
+  console.log(
+    'CREATE TB_QUERY_FORM, TB_SQL, TB_QUERY_FORM_REL_SQL'.padEnd(80, '-') +
+      `(${result.length})`,
+  );
   return { dataList, result };
 }

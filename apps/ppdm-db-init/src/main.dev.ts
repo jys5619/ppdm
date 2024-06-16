@@ -6,6 +6,9 @@ import { User } from './entity/user';
 import { UserRole } from './entity/user-role';
 import { promisify } from 'util';
 import * as sqlite3 from 'sqlite3';
+import { Project } from './entity/project';
+import { Program } from './entity/program';
+import { ProjectProgram } from './entity/project-program';
 
 async function run() {
   // const sqlite3 = require('sqlite3').verbose();
@@ -19,10 +22,14 @@ async function run() {
   sqlList.push('DELETE FROM TB_USER');
   sqlList.push('DELETE FROM TB_MENU_ROLE');
   sqlList.push('DELETE FROM TB_MENU');
+  sqlList.push('DELETE FROM TB_PROJECT');
+  sqlList.push('DELETE FROM TB_PROGRAM');
+  sqlList.push('DELETE FROM TB_PROJECT_PROGRAM');
   sqlList.push('DELETE FROM TB_DATABASE');
   sqlList.push('DELETE FROM TB_QUERY_FORM');
   sqlList.push('DELETE FROM TB_QUERY_FORM_INPUT');
-  sqlList.push('DELETE FROM TB_QUERY_FORM_SQL');
+  sqlList.push('DELETE FROM TB_SQL');
+  sqlList.push('DELETE FROM TB_QUERY_FORM_REL_SQL');
   console.log('DELETE TABLE'.padEnd(80, '-') + `(${sqlList.length})`);
 
   const userData = User(100);
@@ -36,6 +43,15 @@ async function run() {
 
   const menuRoleData = MenuRole(menuData.menus);
   sqlList.push(...menuRoleData.result);
+
+  const projectData = Project();
+  sqlList.push(...projectData.result);
+
+  const programData = Program();
+  sqlList.push(...programData.result);
+
+  const projectProgramData = ProjectProgram();
+  sqlList.push(...projectProgramData.result);
 
   const databaseData = Database();
   sqlList.push(...databaseData.result);

@@ -5,7 +5,11 @@ import {
   QueryFormRepository,
 } from '@entity/ppdm-sqlite-entity/entities/data/query-form';
 import { QueryFormInputRepository } from '@entity/ppdm-sqlite-entity/entities/data/query-form-input';
-import { QueryFormSqlRepository } from '@entity/ppdm-sqlite-entity/entities/data/query-form-sql';
+import {
+  QueryFormRelSqlEntity,
+  QueryFormRelSqlRepository,
+} from '@entity/ppdm-sqlite-entity/entities/data/query-form-rel-sql';
+import { SqlRepository } from '@entity/ppdm-sqlite-entity/entities/data/sql';
 import { QueryFormInputType } from '@entity/ppdm-sqlite-entity/share/data-type/query-form-input-type.enum';
 import { Injectable } from '@nestjs/common';
 
@@ -14,7 +18,8 @@ export class QueryFormDom {
   constructor(
     private readonly queryFormRepository: QueryFormRepository,
     private readonly queryFormInputRepository: QueryFormInputRepository,
-    private readonly queryFormSqlRepository: QueryFormSqlRepository,
+    private readonly sqlRepository: SqlRepository,
+    private readonly queryFormRelSqlRepository: QueryFormRelSqlRepository,
   ) {}
 
   /**
@@ -44,12 +49,17 @@ export class QueryFormDom {
       );
     }
 
-    const queryFormSqlList = await this.queryFormSqlRepository.save(
-      queryFormVo.sqlList,
-    );
-    queryForm.sqlList = new Promise((resolve) => resolve(queryFormSqlList));
+    const queryFormResult = await this.queryFormRepository.save(queryForm);
+    const sqlListResult = await this.sqlRepository.save(queryFormVo.sqlList);
 
-    return await this.queryFormRepository.save(queryForm);
+    for (const sql of sqlListResult) {
+      const queryFormRelSqlEntity = new QueryFormRelSqlEntity();
+      queryFormRelSqlEntity.queryForm = queryFormResult;
+      queryFormRelSqlEntity.sql = sql;
+      await this.queryFormRelSqlRepository.save(queryFormRelSqlEntity);
+    }
+
+    return await this.queryFormRelSqlRepository.save(queryForm);
   }
 
   /**
@@ -113,7 +123,7 @@ export class QueryFormDom {
     });
 
     const inputList = await queryFormEntity.inputList;
-    const sqlList = await queryFormEntity.sqlList;
+    const sqlList = await this.sqlRepository.findManyById(id);
 
     const queryFormVo: QueryFormVo = {
       ...queryFormEntity,

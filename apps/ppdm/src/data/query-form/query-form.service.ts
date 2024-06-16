@@ -3,14 +3,13 @@ import { QueryFormCreateDto } from './dto/query-form-create.dto';
 import { QueryFormDom } from '@doms/ppdm-dom/dom/data/query-form.dom';
 import { QueryFormEntity } from '@entity/ppdm-sqlite-entity/entities/data/query-form';
 import { QueryFormVo } from '@doms/ppdm-dom/vo/data';
-import { DatabaseDom } from '@doms/ppdm-dom/dom/data';
-import { QueryFormSqlDom } from '@doms/ppdm-dom/dom/data/query-form-sql.dom';
+import { DatabaseDom, SqlDom } from '@doms/ppdm-dom/dom/data';
 
 @Injectable()
 export class QueryFormService {
   constructor(
     private readonly queryFormDom: QueryFormDom,
-    private readonly queryFormSqlDom: QueryFormSqlDom,
+    private readonly sqlDom: SqlDom,
     private readonly databaseDom: DatabaseDom,
   ) {}
 
@@ -34,7 +33,7 @@ export class QueryFormService {
     inputData: { [x: string]: string | number | null | undefined },
   ) {
     const queryFormSqlList =
-      await this.queryFormSqlDom.findManyByQueryFormId(queryFormId);
+      await this.sqlDom.findManyByQueryFormId(queryFormId);
 
     const result = [];
     for (const queryFormSql of queryFormSqlList) {

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmExModule } from '@entity/ppdm-sqlite-entity/share/customer-repository/typeorm-ex.module';
-import { QueryFormSqlRepository } from './query-form-sql.repository';
+import { ProgramMenuRepository } from './program-menu.repository';
 
 @Module({
-  imports: [TypeOrmExModule.forCustomRepository([QueryFormSqlRepository])],
+  imports: [TypeOrmExModule.forCustomRepository([ProgramMenuRepository])],
   exports: [TypeOrmExModule],
 })
-export class QueryFormSqlModule {}
+export class ProgramMenuModule {}
