@@ -15,10 +15,39 @@ export function Menu() {
 
   // MAIN
   let mainMenus: IMenu[] = [
-    { name: 'Project', url: `/project`, sequence: 1 },
-    { name: 'Program', url: `/program`, sequence: 2 },
-    { name: 'Data', url: `/data/database/info`, sequence: 3 },
-    { name: 'Sample', url: `/sample/ui/typography`, sequence: 4 },
+    { name: 'Work', url: `/work`, sequence: 1 },
+    { name: 'Project', url: `/project`, sequence: 2 },
+    { name: 'Program', url: `/program`, sequence: 3 },
+    { name: 'Data', url: `/data`, sequence: 4 },
+    { name: 'Admin', url: `/admin`, sequence: 5 },
+    { name: 'Sample', url: `/sample`, sequence: 6 },
+    // Work
+    {
+      parentName: 'Work',
+      name: 'Todo',
+      url: `/work/todo`,
+      sequence: 1,
+    },
+    {
+      parentName: 'Work',
+      name: 'Monitor',
+      url: `/work/monitor`,
+      sequence: 2,
+    },
+    // Project
+    {
+      parentName: 'Project',
+      name: 'Project',
+      url: `/project/info`,
+      sequence: 1,
+    },
+    // Program
+    {
+      parentName: 'Program',
+      name: 'App',
+      url: `/program/info`,
+      sequence: 1,
+    },
     // Data
     {
       parentName: 'Data',
@@ -28,9 +57,28 @@ export function Menu() {
     },
     {
       parentName: 'Data',
-      name: 'Database Info2',
-      url: `/data/database/info`,
+      name: 'Query Form',
+      url: `/data/query-form`,
       sequence: 2,
+    },
+    // Admin
+    {
+      parentName: 'Admin',
+      name: 'Project',
+      url: `/admin/project`,
+      sequence: 1,
+    },
+    {
+      parentName: 'Admin',
+      name: 'Program',
+      url: `/admin/program`,
+      sequence: 2,
+    },
+    {
+      parentName: 'Admin',
+      name: 'Database',
+      url: `/admin/database/edit`,
+      sequence: 3,
     },
     // Sample
     { parentName: 'Sample', name: 'Link', url: `/sample/ui/link`, sequence: 2 },
