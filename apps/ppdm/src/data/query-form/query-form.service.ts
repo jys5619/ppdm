@@ -4,6 +4,7 @@ import { QueryFormDom } from '@doms/ppdm-dom/dom/data/query-form.dom';
 import { QueryFormEntity } from '@entity/ppdm-sqlite-entity/entities/data/query-form';
 import { QueryFormVo } from '@doms/ppdm-dom/vo/data';
 import { DatabaseDom, SqlDom } from '@doms/ppdm-dom/dom/data';
+import { QueryFormSearchDto } from './dto/query-form-search.dto';
 
 @Injectable()
 export class QueryFormService {
@@ -13,8 +14,13 @@ export class QueryFormService {
     private readonly databaseDom: DatabaseDom,
   ) {}
 
-  async getList(): Promise<QueryFormEntity[]> {
-    return this.queryFormDom.findMany();
+  async getList(
+    queryFormSearchDto: QueryFormSearchDto,
+  ): Promise<QueryFormEntity[]> {
+    return this.queryFormDom.findMany(
+      queryFormSearchDto.title,
+      queryFormSearchDto.state,
+    );
   }
 
   async get(id: string): Promise<QueryFormVo> {

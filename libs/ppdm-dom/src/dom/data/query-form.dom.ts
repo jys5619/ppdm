@@ -108,8 +108,11 @@ export class QueryFormDom {
    * @param id
    * @returns
    */
-  public async findMany(): Promise<QueryFormEntity[]> {
-    return await this.queryFormRepository.find();
+  public async findMany(
+    title?: string,
+    state?: string,
+  ): Promise<QueryFormEntity[]> {
+    return await this.queryFormRepository.findBySearch(title, state);
   }
 
   /**

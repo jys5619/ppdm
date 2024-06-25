@@ -3,6 +3,7 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { QueryFormService } from './query-form.service';
 import { PpdmPublicAuth } from '../../share/decorator';
 import { QueryFormCreateDto } from './dto/query-form-create.dto';
+import { QueryFormSearchDto } from './dto/query-form-search.dto';
 
 @Controller('query-form')
 @ApiTags('Database Controller')
@@ -13,8 +14,8 @@ export class QueryFormController {
   @ApiOperation({ summary: 'Query Form 목록 조회' })
   @PpdmPublicAuth()
   @Put()
-  async getQueryFormList() {
-    return await this.queryFormService.getList();
+  async getQueryFormList(@Body() queryFormSearchDto: QueryFormSearchDto) {
+    return await this.queryFormService.getList(queryFormSearchDto);
   }
 
   @ApiOperation({ summary: 'Query Form 조회' })
